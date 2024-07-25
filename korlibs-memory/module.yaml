@@ -4,10 +4,8 @@ product:
 
 apply: [ ../common.module-template.yaml ]
 
-aliases:
-  - jvmAndAndroid: [jvm, android]
-
 dependencies:
+  - org.jetbrains.kotlinx:atomicfu:0.24.0: exported
 
 test-dependencies:
-
+  - com.soywiz:korlibs-platform:6.0.0: exported
