@@ -2,6 +2,7 @@
 
 package korlibs.memory
 
+import korlibs.memory.internal.*
 import kotlinx.cinterop.*
 import platform.posix.*
 import kotlin.experimental.*
