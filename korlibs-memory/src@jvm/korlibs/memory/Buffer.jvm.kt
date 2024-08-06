@@ -94,7 +94,7 @@ actual class Buffer(val buffer: ByteBuffer) : AutoCloseable {
         }
 
         actual fun mmap(path: String, position: Long, size: Long, mode: BufferMapMode): Buffer {
-            val fc = FileChannel.open(Path.of(path), StandardOpenOption.READ, StandardOpenOption.WRITE, StandardOpenOption.CREATE)
+            val fc = FileChannel.open(Paths.get(path), StandardOpenOption.READ, StandardOpenOption.WRITE, StandardOpenOption.CREATE)
             val bb = fc.map(when (mode) {
                 BufferMapMode.READ_ONLY -> FileChannel.MapMode.READ_ONLY
                 BufferMapMode.READ_WRITE -> FileChannel.MapMode.READ_WRITE
