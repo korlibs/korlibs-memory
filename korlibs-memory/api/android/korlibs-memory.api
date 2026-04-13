@@ -1159,7 +1159,7 @@ public final class korlibs/memory/SimpleRingBuffer {
 public abstract interface class korlibs/memory/TypedBuffer : korlibs/memory/BaseBuffer {
 	public abstract fun getBuffer ()Lkorlibs/memory/Buffer;
 	public abstract fun getElementSizeInBytes ()I
-	public abstract fun getSize ()I
+	public fun getSize ()I
 }
 
 public final class korlibs/memory/TypedBuffer$DefaultImpls {

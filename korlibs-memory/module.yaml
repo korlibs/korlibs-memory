@@ -5,7 +5,7 @@ product:
 apply: [ ../common.module-template.yaml ]
 
 dependencies:
-  - org.jetbrains.kotlinx:atomicfu:0.24.0: exported
+  - org.jetbrains.kotlinx:atomicfu:0.32.1: exported
 
 test-dependencies:
-  - com.soywiz:korlibs-platform:6.0.0: exported
+  - org.korge:korlibs-platform:6.1.0: exported
