@@ -1,8 +1,10 @@
 package korlibs.memory
 
-import kotlin.native.internal.GC
+import kotlin.native.runtime.GC
+import kotlin.native.runtime.NativeRuntimeApi
 
-public actual val KmemGC: KmemGCImpl = object : KmemGCImpl() {
+@OptIn(NativeRuntimeApi::class)
+actual val KmemGC: KmemGCImpl = object : KmemGCImpl() {
     override fun collect() = GC.collect()
     override fun collectCyclic() = GC.collect() // Available since 1.4?
     override fun suspend() = GC.suspend()
