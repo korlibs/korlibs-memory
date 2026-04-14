@@ -5,12 +5,48 @@ import org.khronos.webgl.*
 
 private val isLittleEndian: Boolean = Uint8Array(Uint32Array(1).also { it[0] = 0x11223344 }.buffer)[0].toInt() == 0x44
 
+private fun ByteArray.toInt8ArrayLocal(): Int8Array {
+    val out = Int8Array(size)
+    for (n in indices) out[n] = this[n]
+    return out
+}
+
+private fun Int8Array.toByteArrayLocal(): ByteArray {
+    val out = ByteArray(length)
+    for (n in out.indices) out[n] = this[n]
+    return out
+}
+
+private fun Int16Array.toShortArrayLocal(): ShortArray {
+    val out = ShortArray(length)
+    for (n in out.indices) out[n] = this[n]
+    return out
+}
+
+private fun Int32Array.toIntArrayLocal(): IntArray {
+    val out = IntArray(length)
+    for (n in out.indices) out[n] = this[n]
+    return out
+}
+
+private fun Float32Array.toFloatArrayLocal(): FloatArray {
+    val out = FloatArray(length)
+    for (n in out.indices) out[n] = this[n]
+    return out
+}
+
+private fun Float64Array.toDoubleArrayLocal(): DoubleArray {
+    val out = DoubleArray(length)
+    for (n in out.indices) out[n] = this[n]
+    return out
+}
+
 actual class Buffer(val dataView: org.khronos.webgl.DataView) : AutoCloseable {
     actual constructor(size: Int, direct: Boolean) : this(org.khronos.webgl.DataView(ArrayBuffer(checkNBufferSize(size))))
     actual constructor(array: ByteArray, offset: Int, size: Int) : this(
         //DataView(checkNBufferWrap(array, offset, size).unsafeCast<Int8Array>().buffer, offset, size)
         // @TODO: Can't wrap, so we perform a copy
-        org.khronos.webgl.DataView(checkNBufferWrap(array, offset, size).toInt8Array().buffer, offset, size)
+        org.khronos.webgl.DataView(checkNBufferWrap(array, offset, size).toInt8ArrayLocal().buffer, offset, size)
     )
 
     actual val byteOffset: Int get() = this.dataView.byteOffset
@@ -100,11 +136,11 @@ fun ArrayBuffer.asFloat32Array(): Float32Array = Float32Array(this)
 fun ArrayBuffer.asFloat64Array(): Float64Array = Float64Array(this)
 
 fun ArrayBuffer.toUByteArray(): UByteArray = asUint8Array().toByteArray().asUByteArray()
-fun ArrayBuffer.toByteArray(): ByteArray = asInt8Array().toByteArray()
-fun ArrayBuffer.toShortArray(): ShortArray = asInt16Array().toShortArray()
-fun ArrayBuffer.toIntArray(): IntArray = asInt32Array().toIntArray()
-fun ArrayBuffer.toFloatArray(): FloatArray = asFloat32Array().toFloatArray()
-fun ArrayBuffer.toDoubleArray(): DoubleArray = asFloat64Array().toDoubleArray()
+fun ArrayBuffer.toByteArray(): ByteArray = asInt8Array().toByteArrayLocal()
+fun ArrayBuffer.toShortArray(): ShortArray = asInt16Array().toShortArrayLocal()
+fun ArrayBuffer.toIntArray(): IntArray = asInt32Array().toIntArrayLocal()
+fun ArrayBuffer.toFloatArray(): FloatArray = asFloat32Array().toFloatArrayLocal()
+fun ArrayBuffer.toDoubleArray(): DoubleArray = asFloat64Array().toDoubleArrayLocal()
 
 val Buffer.arrayUByte: Uint8Array get() = Uint8Array(this.buffer, byteOffset, sizeInBytes)
 val Buffer.arrayByte: Int8Array get() = Int8Array(buffer, byteOffset, sizeInBytes)

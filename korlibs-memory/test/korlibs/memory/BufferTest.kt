@@ -43,6 +43,14 @@ class BufferTest {
         arraycopy(buffer1.slice(3, 4000), 1, buffer2.slice(1), 2, 3000)
         assertEquals(listOf(255, 254, 253, 5, 6, 0, 0, 0, 0, 0), IntArray(10) { buffer2[it] }.toList())
     }
+
+    @Test
+    fun testSliceUnsigned8ClampedBuffer() {
+        val data = Uint8ClampedBuffer(16 * 4)
+        val sliceAll = data.slice(0, 16)
+        for (n in 0 until 16) sliceAll[n] = n
+        assertEquals(IntArray(16) { it }.toList(), (0 until sliceAll.size).map { sliceAll[it] })
+    }
     
     @Test
     fun testCopyBig8() {
